@@ -1,0 +1,42 @@
+{
+    "name": "anik/cache",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "psr-6",
+        "psr-cache",
+        "psr-16",
+        "psr-simple-cache",
+        "simple-cache-implementation",
+        "cache-contract-implementation",
+        "null-cache",
+        "in-memory-cache",
+        "runtime-cache",
+        "array-cache"
+    ],
+    "authors": [
+        {
+            "name": "Syed Sirajul Islam Anik",
+            "email": "sirajul.islam.anik@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Anik\\Cache\\": "src/"
+        },
+        "files": [
+            "src/methods.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.3",
+        "psr/cache": "^1.0",
+        "psr/simple-cache": "^1.0"
+    },
+    "provide": {
+        "psr/cache-implementation": "^1.0",
+        "psr/simple-cache-implementation": "^1.0"
+    }
+}
