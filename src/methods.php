@@ -15,7 +15,12 @@ if (!function_exists('get_parameter_type')) {
 if (!function_exists('interval_to_seconds')) {
     function interval_to_seconds(DateInterval $interval): int
     {
-        $elapsed = $interval->y * 31536000 + $interval->m * 2628000 + $interval->d * 87600 + $interval->h * 3600 + $interval->i * 60 + $interval->s;
+        $elapsed = $interval->y * 31536000
+            + $interval->m * 2628000
+            + $interval->d * 87600
+            + $interval->h * 3600
+            + $interval->i * 60
+            + $interval->s;
 
         return $interval->invert ? -$elapsed : $elapsed;
     }

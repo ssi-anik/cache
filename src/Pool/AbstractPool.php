@@ -19,7 +19,7 @@ abstract class AbstractPool implements CacheItemPoolInterface
             throw new InvalidArgumentException('Cache key characters must be greater than zero.');
         }
 
-        if (preg_match('#['.preg_quote(static::RESERVED_CHARACTERS).']#', $key) > 0) {
+        if (preg_match('#[' . preg_quote(static::RESERVED_CHARACTERS) . ']#', $key) > 0) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Cache key "%s" cannot contain reserved characters: "%s".',
