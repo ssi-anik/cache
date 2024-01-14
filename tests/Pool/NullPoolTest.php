@@ -9,9 +9,9 @@ use Anik\Cache\Test\BaseTestCase;
 
 class NullPoolTest extends BaseTestCase
 {
-    protected function getNullPool(): NullPool
+    protected function getNullPool($param = null): NullPool
     {
-        return new NullPool();
+        return is_null($param) ? new NullPool() : new NullPool($param);
     }
 
     public function reservedCharacterCheckForKeyDataProvider(): array
@@ -50,10 +50,11 @@ class NullPoolTest extends BaseTestCase
     public function testItemIsNeverStoredUsingSaveMethod()
     {
         $item = new Item('key-1', 'value-1', null, false);
-        $this->getNullPool()->save($item);
+        $pool = $this->getNullPool();
+        $pool->save($item);
 
-        $this->assertFalse($this->getNullPool()->getItem('key-1')->isHit());
-        $this->assertFalse($this->getNullPool()->hasItem('key-1'));
+        $this->assertFalse($pool->getItem('key-1')->isHit());
+        $this->assertFalse($pool->hasItem('key-1'));
     }
 
     public function testItemIsNeverStoredUsingSaveDeferredAndCommitMethod()
@@ -63,13 +64,13 @@ class NullPoolTest extends BaseTestCase
         $pool->saveDeferred($item);
         $pool->commit();
 
-        $this->assertFalse($this->getNullPool()->getItem('key-2')->isHit());
-        $this->assertFalse($this->getNullPool()->hasItem('key-2'));
+        $this->assertFalse($pool->getItem('key-2')->isHit());
+        $this->assertFalse($pool->hasItem('key-2'));
     }
 
-    public function testGetItemMethodAlwaysReturnsItemWithIsHitFalse()
+    public function testGetItemMethodAlwaysReturnsItemWithAppropriateIsHitValue()
     {
-        $pool = new NullPool();
+        $pool = $this->getNullPool();
 
         $pool->save(new Item('key-1', 'value', null, false));
         $this->assertFalse($pool->getItem('key-1')->isHit());
@@ -78,9 +79,9 @@ class NullPoolTest extends BaseTestCase
         $this->assertFalse($pool->getItem('key-2')->isHit());
     }
 
-    public function testGetItemsMethodAlwaysReturnsArrayOfItemsWithIsHitFalse()
+    public function testGetItemsMethodAlwaysReturnsArrayOfItemsWithAppropriateIsHitValue()
     {
-        $pool = new NullPool();
+        $pool = $this->getNullPool();
 
         $pool->save(new Item('key-1', 'value', null, false));
         $pool->save(new Item('key-2', 'value', null, false));
@@ -94,7 +95,7 @@ class NullPoolTest extends BaseTestCase
 
     public function testHasItemMethodAlwaysReturnsFalse()
     {
-        $pool = new NullPool();
+        $pool = $this->getNullPool();
 
         $pool->save(new Item('key-1', 'value', null, false));
         $this->assertFalse($pool->hasItem('key-1'));
@@ -105,13 +106,13 @@ class NullPoolTest extends BaseTestCase
 
     public function testClearMethodReturnsTrue()
     {
-        $pool = new NullPool();
+        $pool = $this->getNullPool();
         $this->assertTrue($pool->clear());
     }
 
     public function testDeleteItemMethodReturnsTrue()
     {
-        $pool = new NullPool();
+        $pool = $this->getNullPool();
         $this->assertTrue($pool->deleteItem('key'));
     }
 
@@ -127,7 +128,7 @@ class NullPoolTest extends BaseTestCase
     /** @dataProvider objectConstructionDataProvider */
     public function testSaveMethodsReturnDefaultValue($param, $expected)
     {
-        $pool = is_null($param) ? new NullPool() : new NullPool($param);
+        $pool = $this->getNullPool($param);
 
         $item = new Item('key', 'value', null, false);
         $this->assertEquals($expected, $pool->save($item));
