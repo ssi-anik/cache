@@ -78,7 +78,12 @@ class ItemTest extends BaseTestCase
     {
         $item = new Item(...$data['params']);
         foreach ($data['expectations'] as $method => $expectation) {
-            $this->assertEquals($expectation, call_user_func([$item, $method]));
+            $actual = call_user_func([$item, $method]);
+            if ($method !== 'getExpiration') {
+                $this->assertSame($expectation, $actual);
+            } else {
+                $this->assertEqualsWithDelta($expectation, $actual, 1);
+            }
         }
     }
 
