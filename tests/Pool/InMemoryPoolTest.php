@@ -58,7 +58,7 @@ class InMemoryPoolTest extends BaseTestCase
 
         $this->assertTrue(($retrievedItem = $pool->getItem('key-1'))->isHit());
         $this->assertTrue($pool->hasItem('key-1'));
-        $this->assertEquals('value-1', $retrievedItem->getValue());
+        $this->assertSame('value-1', $retrievedItem->getValue());
     }
 
     public function testItemIsStoredUsingSaveDeferredAndCommitMethod()

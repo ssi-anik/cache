@@ -131,8 +131,8 @@ class NullPoolTest extends BaseTestCase
         $pool = $this->getNullPool($param);
 
         $item = new Item('key', 'value', null, false);
-        $this->assertEquals($expected, $pool->save($item));
-        $this->assertEquals($expected, $pool->saveDeferred($item));
-        $this->assertEquals($expected, $pool->commit());
+        $this->assertSame($expected, $pool->save($item));
+        $this->assertSame($expected, $pool->saveDeferred($item));
+        $this->assertSame($expected, $pool->commit());
     }
 }

@@ -93,7 +93,7 @@ class ItemTest extends BaseTestCase
         $this->assertNull($item->get());
 
         $item = new Item('key2', 'new-value', null, true);
-        $this->assertEquals('new-value', $item->get());
+        $this->assertSame('new-value', $item->get());
     }
 
     public function testExpirationCanBeSetOnItemByCallingExpireMethods()
@@ -104,10 +104,10 @@ class ItemTest extends BaseTestCase
         $newTime = ($now = new DateTimeImmutable())->modify('+100 seconds');
 
         $item->expiresAt($newTime);
-        $this->assertEquals($newTime->getTimestamp(), $item->getExpiration());
+        $this->assertSame($newTime->getTimestamp(), $item->getExpiration());
 
         $item->expiresAfter(200);
-        $this->assertEquals($now->modify('200 seconds')->getTimestamp(), $item->getExpiration());
+        $this->assertSame($now->modify('200 seconds')->getTimestamp(), $item->getExpiration());
     }
 
     public function testGetMethodOnItemReturnsNullIfIsHitIsFalse()
@@ -121,7 +121,7 @@ class ItemTest extends BaseTestCase
     {
         $item = new Item('key', 'value', null, false);
         $item->set('new value');
-        $this->assertEquals('new value', $item->getValue());
+        $this->assertSame('new value', $item->getValue());
     }
 
     public function testSetMethodCanOnlyReceiveAllowedValues()
