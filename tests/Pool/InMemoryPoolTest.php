@@ -163,38 +163,7 @@ class InMemoryPoolTest extends BaseTestCase
 
     public function testStoreItemOnlyAcceptExtendedCacheItemInterface()
     {
-        $item = new class implements CacheItemInterface {
-            public function getKey(): string
-            {
-                return 'key-1';
-            }
-
-            public function get()
-            {
-                return null;
-            }
-
-            public function isHit()
-            {
-                return false;
-            }
-
-            public function set($value)
-            {
-                return true;
-            }
-
-            public function expiresAt($expiration)
-            {
-                return null;
-            }
-
-            public function expiresAfter($time)
-            {
-                return null;
-            }
-        };
-
+        $item = $this->getMockBuilder(CacheItemInterface::class)->getMock();
         $pool = $this->getInMemoryPool();
 
         $this->assertTrue($pool->save(new Item('key-1', 'value', null, false)));
