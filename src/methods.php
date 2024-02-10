@@ -1,9 +1,6 @@
 <?php
 
 use Anik\Cache\Exception\InvalidArgumentException;
-use Anik\Cache\Pool\InMemoryPool;
-use Anik\Cache\Pool\NullPool;
-use Anik\Cache\PoolAdapter;
 
 if (!function_exists('get_parameter_type')) {
     function get_parameter_type($parameter): string
