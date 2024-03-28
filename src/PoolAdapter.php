@@ -83,7 +83,7 @@ class PoolAdapter implements CacheItemPoolInterface, CacheInterface
 
         $results = [];
         foreach ($items as $key => $item) {
-            $results[$key] = $item->get() ?? $default;
+            $results[$key] = $item->isHit() ? $item->get() : $default;
         }
 
         return $results;

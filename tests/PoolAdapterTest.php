@@ -170,7 +170,7 @@ class PoolAdapterTest extends BaseTestCase
         $this->assertSame(
             [
                 'key-1' => 'value',
-                'key-2' => 'default-value',
+                'key-2' => null,
                 'key-3' => 'default-value',
             ],
             $adapter->getMultiple(['key-1', 'key-2', 'key-3'], 'default-value')
