@@ -14,7 +14,7 @@ class NullPoolTest extends BaseTestCase
         return is_null($param) ? new NullPool() : new NullPool($param);
     }
 
-    public function reservedCharacterCheckForKeyDataProvider(): array
+    public static function reservedCharacterCheckForKeyDataProvider(): array
     {
         return [
             'valid key for getItem' => ['getItem', 'key', false],
@@ -116,7 +116,7 @@ class NullPoolTest extends BaseTestCase
         $this->assertTrue($pool->deleteItem('key'));
     }
 
-    public function objectConstructionDataProvider(): array
+    public static function objectConstructionDataProvider(): array
     {
         return [
             'does not pass value - uses default' => [null, false],

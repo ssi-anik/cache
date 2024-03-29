@@ -9,7 +9,7 @@ use DateTimeImmutable;
 
 class ItemTest extends BaseTestCase
 {
-    public function itemsInitializationDataProvider(): array
+    public static function itemsInitializationDataProvider(): array
     {
         return [
             'only key is set' => [
@@ -132,7 +132,7 @@ class ItemTest extends BaseTestCase
         $item->set($file);
     }
 
-    public function expireMethodsDataProvider(): array
+    public static function expireMethodsDataProvider(): array
     {
         return [
             'expiresAt method with null' => [

@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Anik\Cache;
 
+use DateInterval;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\SimpleCache\CacheInterface;
 
 class PoolAdapter implements CacheItemPoolInterface, CacheInterface
 {
-    protected $pool;
+    protected CacheItemPoolInterface $pool;
 
     public function __construct(CacheItemPoolInterface $pool)
     {
         $this->pool = $pool;
     }
 
-    public function getItem($key): CacheItemInterface
+    public function getItem(string $key): CacheItemInterface
     {
         return $this->pool->getItem($key);
     }
@@ -27,7 +28,7 @@ class PoolAdapter implements CacheItemPoolInterface, CacheInterface
         return $this->pool->getItems($keys);
     }
 
-    public function hasItem($key): bool
+    public function hasItem(string $key): bool
     {
         return $this->pool->hasItem($key);
     }
@@ -37,7 +38,7 @@ class PoolAdapter implements CacheItemPoolInterface, CacheInterface
         return $this->pool->clear();
     }
 
-    public function deleteItem($key): bool
+    public function deleteItem(string $key): bool
     {
         return $this->pool->deleteItem($key);
     }
@@ -62,22 +63,22 @@ class PoolAdapter implements CacheItemPoolInterface, CacheInterface
         return $this->pool->commit();
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return $this->getItem($key)->get() ?? $default;
     }
 
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
         return $this->save(new Item($key, $value, $ttl));
     }
 
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         return $this->deleteItem($key);
     }
 
-    public function getMultiple($keys, $default = null): array
+    public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
         $items = $this->getItems($keys);
 
@@ -89,7 +90,7 @@ class PoolAdapter implements CacheItemPoolInterface, CacheInterface
         return $results;
     }
 
-    public function setMultiple($values, $ttl = null): bool
+    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
     {
         foreach ($values as $key => $value) {
             $this->set($key, $value, $ttl);
@@ -98,12 +99,12 @@ class PoolAdapter implements CacheItemPoolInterface, CacheInterface
         return true;
     }
 
-    public function deleteMultiple($keys): bool
+    public function deleteMultiple(iterable $keys): bool
     {
         return $this->deleteItems($keys);
     }
 
-    public function has($key): bool
+    public function has(string $key): bool
     {
         return $this->hasItem($key);
     }

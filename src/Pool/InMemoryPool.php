@@ -14,22 +14,22 @@ final class InMemoryPool extends AbstractPool
     private const VALUE = 'value';
     private const EXPIRES_AT = 'expires_at';
 
-    private $items = [];
-    private $deferredItems = [];
+    private array $items = [];
+    private array $deferredItems = [];
 
     private function now(): DateTimeImmutable
     {
         return (new DateTimeImmutable());
     }
 
-    private function itemByKey($key)
+    private function itemByKey(string $key)
     {
         $this->validateKey($key);
 
         return $this->items[$key] ?? null;
     }
 
-    public function getItem($key): Item
+    public function getItem(string $key): Item
     {
         $item = $this->itemByKey($key);
 
@@ -55,7 +55,7 @@ final class InMemoryPool extends AbstractPool
         );
     }
 
-    public function hasItem($key): bool
+    public function hasItem(string $key): bool
     {
         return $this->getItem($key)->isHit();
     }
@@ -68,7 +68,7 @@ final class InMemoryPool extends AbstractPool
         return true;
     }
 
-    public function deleteItem($key): bool
+    public function deleteItem(string $key): bool
     {
         $this->validateKey($key);
 

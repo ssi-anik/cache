@@ -9,21 +9,21 @@ use Psr\Cache\CacheItemInterface;
 
 final class NullPool extends AbstractPool
 {
-    private $defaultReturn;
+    private bool $defaultReturn;
 
     public function __construct(bool $defaultReturn = false)
     {
         $this->defaultReturn = $defaultReturn;
     }
 
-    public function getItem($key): Item
+    public function getItem(string $key): Item
     {
         $this->validateKey($key);
 
         return new Item($key, null, null, false);
     }
 
-    public function hasItem($key): bool
+    public function hasItem(string $key): bool
     {
         $this->validateKey($key);
 
@@ -35,7 +35,7 @@ final class NullPool extends AbstractPool
         return true;
     }
 
-    public function deleteItem($key): bool
+    public function deleteItem(string $key): bool
     {
         $this->validateKey($key);
 

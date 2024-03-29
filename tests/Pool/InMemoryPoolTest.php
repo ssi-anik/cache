@@ -16,7 +16,7 @@ class InMemoryPoolTest extends BaseTestCase
         return new InMemoryPool();
     }
 
-    public function reservedCharacterCheckForKeyDataProvider(): array
+    public static function reservedCharacterCheckForKeyDataProvider(): array
     {
         return [
             'valid key for getItem' => ['getItem', 'key', false],
