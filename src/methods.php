@@ -1,6 +1,9 @@
 <?php
 
 use Anik\Cache\Exception\InvalidArgumentException;
+use Anik\Cache\Pool\InMemoryPool;
+use Anik\Cache\Pool\NullPool;
+use Anik\Cache\PoolAdapter;
 
 if (!function_exists('get_parameter_type')) {
     function get_parameter_type($parameter): string
@@ -44,5 +47,19 @@ if (!function_exists('expiry_timestamp')) {
         $time = $time instanceof DateInterval ? interval_to_seconds($time) : $time;
 
         return (new DateTimeImmutable())->modify(sprintf("%d seconds", $time))->getTimestamp();
+    }
+}
+
+if (!function_exists('in_memory_cache')) {
+    function in_memory_cache(): PoolAdapter
+    {
+        return new PoolAdapter(new InMemoryPool());
+    }
+}
+
+if (!function_exists('null_cache')) {
+    function null_cache(bool $defaultReturn = false): PoolAdapter
+    {
+        return new PoolAdapter(new NullPool($defaultReturn));
     }
 }

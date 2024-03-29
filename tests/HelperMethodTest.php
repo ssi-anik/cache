@@ -1,6 +1,7 @@
 <?php
 
 use Anik\Cache\Exception\InvalidArgumentException;
+use Anik\Cache\PoolAdapter;
 use Anik\Cache\Test\BaseTestCase;
 
 class HelperMethodTest extends BaseTestCase
@@ -51,5 +52,11 @@ class HelperMethodTest extends BaseTestCase
         $this->assertSame(InvalidArgumentException::class, get_parameter_type(new InvalidArgumentException()));
         $this->assertSame('string', get_parameter_type('string value'));
         $this->assertSame('integer', get_parameter_type(123456));
+    }
+
+    public function testHelperMethodReturnsCorrectPoolAdapterInstance()
+    {
+        $this->assertInstanceOf(PoolAdapter::class, in_memory_cache());
+        $this->assertInstanceOf(PoolAdapter::class, null_cache());
     }
 }
