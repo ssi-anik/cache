@@ -6,7 +6,7 @@ use Anik\Cache\Test\BaseTestCase;
 
 class HelperMethodTest extends BaseTestCase
 {
-    public function expiryTimestampMethodDataProvider(): array
+    public static function expiryTimestampMethodDataProvider(): array
     {
         $time = new DateTimeImmutable();
         $interval = DateInterval::createFromDateString('-1 seconds');

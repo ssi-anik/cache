@@ -11,13 +11,17 @@ use DateTimeInterface;
 
 final class Item implements CacheItemInterface
 {
-    protected $key;
-    protected $value;
-    protected $expiresAt;
-    protected $isHit;
+    protected string $key;
+    protected mixed $value;
+    protected ?int $expiresAt;
+    protected bool $isHit;
 
-    public function __construct(string $key, $value = null, $expiresAt = null, bool $isHit = false)
-    {
+    public function __construct(
+        string $key,
+        mixed $value = null,
+        null|int|DateInterval|DateTimeInterface $expiresAt = null,
+        bool $isHit = false
+    ) {
         $this->key = $key;
         $this->value = $value;
         $this->expiresAt = expiry_timestamp($expiresAt);
@@ -29,7 +33,7 @@ final class Item implements CacheItemInterface
         return $this->key;
     }
 
-    public function get()
+    public function get(): mixed
     {
         if (false === $this->isHit) {
             return null;
@@ -38,7 +42,7 @@ final class Item implements CacheItemInterface
         return $this->value;
     }
 
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
@@ -48,7 +52,7 @@ final class Item implements CacheItemInterface
         return $this->isHit;
     }
 
-    public function set($value): Item
+    public function set($value): static
     {
         if (
             !is_null($value)
@@ -69,7 +73,7 @@ final class Item implements CacheItemInterface
         return $this;
     }
 
-    public function expiresAt($expiration): Item
+    public function expiresAt($expiration): static
     {
         if (!is_null($expiration) && !$expiration instanceof DateTimeInterface) {
             throw new InvalidArgumentException(
@@ -85,7 +89,7 @@ final class Item implements CacheItemInterface
         return $this;
     }
 
-    public function expiresAfter($time): Item
+    public function expiresAfter($time): static
     {
         if (!is_null($time) && !is_int($time) && !$time instanceof DateInterval) {
             throw new InvalidArgumentException(

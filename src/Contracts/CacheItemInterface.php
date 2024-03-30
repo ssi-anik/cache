@@ -8,5 +8,5 @@ interface CacheItemInterface extends Psr6CacheItemInterface
 {
     public function getExpiration(): ?int;
 
-    public function getValue();
+    public function getValue(): mixed;
 }

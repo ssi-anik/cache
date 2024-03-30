@@ -42,10 +42,12 @@ abstract class AbstractPool implements CacheItemPoolInterface
         return $results;
     }
 
-    public function deleteItems(array $keys)
+    public function deleteItems(array $keys): bool
     {
         foreach ($keys as $key) {
             $this->deleteItem($key);
         }
+
+        return true;
     }
 }

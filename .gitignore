@@ -3,3 +3,5 @@ vendor/
 coverage/
 composer.lock
 .phpunit.result.cache
+phpunit.xml.bak
+.phpunit.cache/

@@ -6,7 +6,7 @@ use Anik\Cache\Pool\NullPool;
 use Anik\Cache\PoolAdapter;
 
 if (!function_exists('get_parameter_type')) {
-    function get_parameter_type($parameter): string
+    function get_parameter_type(mixed $parameter): string
     {
         return is_object($parameter) ? get_class($parameter) : gettype($parameter);
     }
@@ -27,7 +27,7 @@ if (!function_exists('interval_to_seconds')) {
 }
 
 if (!function_exists('expiry_timestamp')) {
-    function expiry_timestamp($time)
+    function expiry_timestamp(mixed $time): ?int
     {
         if (is_null($time)) {
             return null;
